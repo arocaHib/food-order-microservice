@@ -9,6 +9,7 @@
                     <a href="/" class="hover:text-blue-300 px-2">Home</a>
                     <a href="/" class="hover:text-blue-300 px-2">About</a>
                     <a href="/" class="hover:text-blue-300 px-2">Discover</a>
+                    <a *ngIf="isAdmin" routerLink="/dashboard" class="hover:text-blue-300 px-2 font-semibold text-blue-600">Dashboard</a>
                 </div>
             </div>
             <div class="col-span-4 flex justify-end items-center">

@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   isLoggedIn: boolean = false;
   currentUser: string | null = null;
   isDropdownOpen: boolean = false;
+  isAdmin: boolean = false;
 
   userInfo : UserDTO | null = null;
   
@@ -39,10 +40,15 @@ export class AppComponent implements OnInit {
         const username = this.authService.getUsernameFromToken();
         if (username) {
           this.userService.getUserByUsername(username).subscribe(user => {
-            this.userInfo = user; 
-            this.userService.setUserInfo(user); 
+            this.userInfo = user;
+            this.userService.setUserInfo(user);
           });
         }
+        // Check if user is admin
+        this.isAdmin = this.authService.isAdmin();
+      } else {
+        // Reset admin status when logged out
+        this.isAdmin = false;
       }
 
     });
@@ -52,7 +58,7 @@ export class AppComponent implements OnInit {
       this.currentUser = username;
     });
 
-    
+
   }
 
   toggleDropdown() {

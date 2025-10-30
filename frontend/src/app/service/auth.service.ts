@@ -124,5 +124,29 @@ export class AuthService {
     return null;
   }
 
+  getRolesFromToken(): string[] {
+    const token = this.getToken();
+    if (token) {
+      try {
+        const decodedToken = this.jwtHelper.decodeToken(token);
+        if (decodedToken.roles && decodedToken.roles.length > 0) {
+          return decodedToken.roles.map((role: any) => role.authority);
+        }
+      } catch (error) {
+        return [];
+      }
+    }
+    return [];
+  }
+
+  hasRole(roleName: string): boolean {
+    const roles = this.getRolesFromToken();
+    return roles.includes(roleName);
+  }
+
+  isAdmin(): boolean {
+    return this.hasRole('ROLE_ADMIN');
+  }
+
 
 }
