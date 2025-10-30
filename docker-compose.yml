@@ -21,3 +21,17 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: 1998
+      MYSQL_ROOT_HOST: '%'
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_data_food:/var/lib/mysql
+    # command: --default-authentication-plugin=mysql_native_password
+
+volumes:
+  mysql_data_food:
