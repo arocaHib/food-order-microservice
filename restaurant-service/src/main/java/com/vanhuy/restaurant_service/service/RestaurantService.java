@@ -93,4 +93,34 @@ public class RestaurantService {
         return restaurantRepository.searchByKeyword(keyword, pageable)
                 .map(this::toDTO);
     }
+
+    public RestaurantDTO updateRestaurant(Integer restaurantId, RestaurantDTO restaurantDTO) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new RestaurantNotFoundException("Restaurant not found with id: " + restaurantId));
+
+        restaurant.setName(restaurantDTO.name());
+        restaurant.setAddress(restaurantDTO.address());
+        // Don't update image here - use uploadImage endpoint for that
+
+        restaurantRepository.save(restaurant);
+        log.info("Successfully updated restaurant {}", restaurantId);
+        return toDTO(restaurant);
+    }
+
+    public void deleteRestaurant(Integer restaurantId) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new RestaurantNotFoundException("Restaurant not found with id: " + restaurantId));
+
+        // Delete image file if exists
+        if (restaurant.getImage() != null) {
+            try {
+                fileStorageService.deleteImage(restaurant.getImage());
+            } catch (Exception e) {
+                log.warn("Failed to delete image file for restaurant {}: {}", restaurantId, e.getMessage());
+            }
+        }
+
+        restaurantRepository.delete(restaurant);
+        log.info("Successfully deleted restaurant {}", restaurantId);
+    }
 }

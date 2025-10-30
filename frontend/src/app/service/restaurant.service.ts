@@ -29,4 +29,27 @@ export class RestaurantService {
   getMenuItemsByRestaurantId(restaurantId: number): Observable<MenuItem[]> {
     return this.http.get<MenuItem[]>(`${this.menuUrl}/restaurant/${restaurantId}`);
   }
+
+  // Admin methods
+  createRestaurant(restaurant: Restaurant): Observable<Restaurant> {
+    return this.http.post<Restaurant>(this.restaurantUrl, restaurant);
+  }
+
+  updateRestaurant(id: number, restaurant: Restaurant): Observable<Restaurant> {
+    return this.http.put<Restaurant>(`${this.restaurantUrl}/${id}`, restaurant);
+  }
+
+  deleteRestaurant(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.restaurantUrl}/${id}`);
+  }
+
+  uploadRestaurantImage(restaurantId: number, file: File): Observable<Restaurant> {
+    const formData = new FormData();
+    formData.append('file', file);
+    return this.http.post<Restaurant>(`${this.restaurantUrl}/${restaurantId}/upload-image`, formData);
+  }
+
+  getImageUrl(filename: string): string {
+    return `${this.restaurantUrl}/images/${filename}`;
+  }
 }

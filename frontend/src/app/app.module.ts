@@ -22,6 +22,7 @@ import { UserManagementComponent } from './component/admin/user-management/user-
 import { RestaurantManagementComponent } from './component/admin/restaurant-management/restaurant-management.component';
 import { OrderManagementComponent } from './component/admin/order-management/order-management.component';
 import { UserFormDialogComponent } from './component/admin/user-form-dialog/user-form-dialog.component';
+import { RestaurantFormDialogComponent } from './component/admin/restaurant-form-dialog/restaurant-form-dialog.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { UserFormDialogComponent } from './component/admin/user-form-dialog/user
     UserManagementComponent,
     RestaurantManagementComponent,
     OrderManagementComponent,
-    UserFormDialogComponent
+    UserFormDialogComponent,
+    RestaurantFormDialogComponent
   ],
   imports: [
     BrowserModule,

@@ -68,4 +68,26 @@ public class RestaurantController {
                 .body(resource);
     }
 
+    @PutMapping("/{restaurantId}")
+    public ResponseEntity<RestaurantDTO> updateRestaurant(
+            @PathVariable Integer restaurantId,
+            @RequestBody RestaurantDTO restaurantDTO) {
+        try {
+            RestaurantDTO updatedRestaurant = restaurantService.updateRestaurant(restaurantId, restaurantDTO);
+            return ResponseEntity.ok(updatedRestaurant);
+        } catch (RestaurantNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/{restaurantId}")
+    public ResponseEntity<Void> deleteRestaurant(@PathVariable Integer restaurantId) {
+        try {
+            restaurantService.deleteRestaurant(restaurantId);
+            return ResponseEntity.noContent().build();
+        } catch (RestaurantNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
